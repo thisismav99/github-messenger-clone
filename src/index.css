@@ -1,7 +1,8 @@
-.about-container, .login-container, .signup-container{
+.about-container, .login-container, 
+.signup-container, .chats-container{
     margin-top: 180px;
 }
 
-.signup-btn, .login-btn{
+.signup-btn, .login-btn, .logout-btn{
     text-decoration: none;
 }
