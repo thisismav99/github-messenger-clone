@@ -32,7 +32,7 @@ function App() {
 
           <Route exact path="/chats">
             { isLogged ? <Redirect to="/chats" /> : <Redirect to="/" /> }
-            <Chats />
+            <Chats userLogged={userLogged} />
           </Route>
         </Switch>
       </Router>

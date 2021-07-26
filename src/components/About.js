@@ -1,5 +1,8 @@
+import useTitle from "../hooks/useTitle";
 
 const About = () => {
+    useTitle("MESSENGER CLONE");
+
     return (
         <div className="container about-container">
             <div className="row">

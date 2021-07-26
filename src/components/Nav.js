@@ -56,18 +56,17 @@ const Nav = ({isLogged, userLogged}) => {
                                                       </Link>
                             }
                         </li>
-                        <li className="nav-item">
+                        <li className="nav-item dropdown">
                             {
-                                isLogged && <p className="user-container">
-                                                <p className="nav-link active">{ user && <span>Hi, { user }</span> }</p>
+                                isLogged && <p>
+                                                <a href="/#" className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                { user && <span><i className="bi bi-person-circle"></i> { user }</span> }
+                                                </a>
+                                                <ul className="dropdown-menu text-center" aria-labelledby="navbarDropdownMenuLink">
+                                                    <li><a href="/#" className="dropdown-item" onClick={() => logOut()}>Logout <i className="bi bi-box-arrow-right"></i></a></li>
+                                                </ul>
                                             </p>
-                            }
-                        </li>
-                        <li className="nav-item">
-                            {
-                                isLogged && <Link onClick={() => logOut()} className="logout-btn">
-                                                <p className="nav-link">Logout</p> 
-                                            </Link>
+                                            
                             }
                         </li>
                     </ul>
