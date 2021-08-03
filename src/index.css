@@ -10,3 +10,8 @@
 .signup-btn, .login-btn{
     text-decoration: none;
 }
+
+#message-form{
+    height: 100px;
+    resize: none;
+}
