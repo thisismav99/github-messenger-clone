@@ -1,17 +1,33 @@
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
+import firebase from "../firebase";
+import { serverTime } from "../firebase";
 
 const Chat = ({ userLogged }) => {
     const { id } = useParams();
     const history = useHistory();
 
-    const { toUser } = useFetch("chat", userLogged, id);
+    const { inboxes, toUser, email } = useFetch("chat", userLogged, id);
 
     const { register, handleSubmit } = useForm();
     
     const sendMessage = (data, event) => {
         event.preventDefault();
+
+        const date = serverTime();
+
+        firebase.firestore().collection("inboxes")
+        .add({
+            from: userLogged,
+            to: email,
+            message: data.message,
+            dateSend: date
+        }).then(() => {
+            document.querySelector("#message-form").value = "";
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 
     return (
@@ -33,12 +49,24 @@ const Chat = ({ userLogged }) => {
                 </div>
                 <div className="col-xl-8 fs-4">
                     <div className="conversation-container">
-                        <div>
-                            <span className="badge rounded-pill bg-secondary">SAMPLE</span>
-                        </div>
-                        <div className="text-end">
-                            <span className="badge rounded-pill bg-primary">SAMPLE 2</span>
-                        </div>
+                        { inboxes === null && <p className="text-center fs-6">Say Hi!</p>}
+                        { inboxes && 
+                          inboxes.map((data) => (
+                                                    <div key={data.id}>
+                                                        { data.from !== userLogged && 
+                                                          <div>
+                                                            <span className="badge rounded-pill bg-secondary">{data.message}</span>
+                                                          </div> 
+                                                        }
+                                                        
+                                                        { data.from === userLogged && 
+                                                          <div className="text-end">
+                                                            <span className="badge rounded-pill bg-primary">{data.message}</span>
+                                                          </div> 
+                                                        }
+                                                    </div>
+                                                )) 
+                        }
                     </div>
 
                     <form onSubmit={handleSubmit((data, event) => sendMessage(data, event))}>
