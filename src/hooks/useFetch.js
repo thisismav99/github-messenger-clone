@@ -30,24 +30,33 @@ const useFetch = (collection, userLogged, to) => {
             });
 
             firebase.firestore().collection("inboxes")
+            .where("to", "==", userLogged)
+            .orderBy("dateSend", "desc")
             .onSnapshot((querySnapshot) => {
                 let inboxes = [];
 
                 querySnapshot.forEach((doc) => {
-                    if(doc.data().email === userLogged){
-                        inboxes.push({...doc.data(), id: doc.id});
-                    }
+                    inboxes.push({...doc.data(), id: doc.id});
+                });
+                
+                // For getting the last element on the array
+                //let removeRedundancy = [...new Map(inboxes.map(data => [data.from, data])).values()];
+
+                // For getting the first element on the array
+                let set = new Set();
+
+                let removeRedundancy = inboxes.filter(data => {
+                    return set.has(data.from) ? false : set.add(data.from);
                 });
 
                 if(subscribe.current){
-                    setInboxes(inboxes.length === 0 ? null : inboxes);
+                    setInboxes(removeRedundancy.length === 0 ? null : removeRedundancy);
                 }
             }, (error) => {
                 console.log(error);
             });
         }
         else if(collection === "chat"){
-            
             firebase.firestore().collection("users")
             .onSnapshot((querySnapshot) => {
                 let user;

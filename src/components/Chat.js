@@ -25,11 +25,18 @@ const Chat = ({ userLogged }) => {
             dateSend: date
         }).then(() => {
             document.querySelector("#message-form").value = "";
+
+            scrollBottom();
         }).catch((error) => {
             console.log(error);
         });
     }
 
+    const scrollBottom = () => {
+        document.querySelector(".conversation-container").scrollTop = 
+        document.querySelector(".conversation-container").scrollHeight - document.querySelector(".conversation-container").clientHeight;
+    }
+    
     return (
         <div className="container-fluid">
             <div className="row">

@@ -15,3 +15,13 @@
     height: 100px;
     resize: none;
 }
+
+.conversation-container{
+    max-height: 300px;
+    overflow: auto;
+}
+
+.inbox-container{
+    max-height: 600px;
+    overflow: auto;
+}
