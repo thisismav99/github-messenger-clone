@@ -35,23 +35,32 @@ const useFetch = (collection, userLogged, to) => {
             .onSnapshot((querySnapshot) => {
                 let inboxes = [];
 
-                querySnapshot.forEach((doc) => {
-                    inboxes.push({...doc.data(), id: doc.id});
+                firebase.firestore().collection("users")
+                .onSnapshot((querySnapshotUsers) => {
+                    querySnapshot.forEach((doc) => {
+                        querySnapshotUsers.forEach((user) => {
+                            if(user.data().email === doc.data().from){
+                                inboxes.push({...doc.data(), id: doc.id, name: user.data().firstname + " " + user.data().lastname});
+                            }
+                        });
+                    });
+
+                    // For getting the last element on the array
+                    //let removeRedundancy = [...new Map(inboxes.map(data => [data.from, data])).values()];
+                    
+                    // For getting the first element on the array
+                    let set = new Set();
+                    
+                    let removeRedundancy = inboxes.filter(data => {
+                        return set.has(data.from) ? false : set.add(data.from);
+                    });
+    
+                    if(subscribe.current){
+                        setInboxes(removeRedundancy.length === 0 ? null : removeRedundancy);
+                    }
+                }, (error) => {
+                    console.log(error);
                 });
-                
-                // For getting the last element on the array
-                //let removeRedundancy = [...new Map(inboxes.map(data => [data.from, data])).values()];
-
-                // For getting the first element on the array
-                let set = new Set();
-
-                let removeRedundancy = inboxes.filter(data => {
-                    return set.has(data.from) ? false : set.add(data.from);
-                });
-
-                if(subscribe.current){
-                    setInboxes(removeRedundancy.length === 0 ? null : removeRedundancy);
-                }
             }, (error) => {
                 console.log(error);
             });

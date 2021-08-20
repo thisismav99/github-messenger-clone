@@ -1,5 +1,5 @@
-
 const Inbox = ({ inboxes }) => {
+
     return (
         <div className="container-fluid">
             <p className="fs-4">INBOX <i className="bi bi-inbox-fill"></i></p>
@@ -10,7 +10,7 @@ const Inbox = ({ inboxes }) => {
                     inboxes.map((data) => (
                         <div className="card my-3" key={data.id}>
                             <div className="card-body">
-                                <p className="fs-5 fw-bolder">{data.from}</p>
+                                <p className="fs-5 fw-bolder">{data.name}</p>
                                 <p className="fs-6 fst-italic">{data.message}</p>
                                 <div className="container">
                                     <div className="row">
@@ -23,7 +23,7 @@ const Inbox = ({ inboxes }) => {
                                             </button>
                                         </div>
                                         <div className="col-xl-6">
-                                            <p className="text-end fw-bold">Aug. 03, 2021</p>
+                                            <p className="text-end fw-bold">{data.dateSend.toDate().toDateString()}</p>
                                         </div>
                                     </div>
                                 </div>
