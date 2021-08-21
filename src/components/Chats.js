@@ -18,10 +18,10 @@ const Chats = ({userLogged}) => {
                     </div>
                     <div className="col-xl-10">
                         <Switch>
-                            <Route path="/chats">
+                            <Route exact path="/chats">
                                 <Inbox inboxes={inboxes} />
                             </Route>
-                            <Route path="/chat/:id">
+                            <Route exact path="/chat/:id">
                                 <Chat userLogged={userLogged} />
                             </Route>
                         </Switch>

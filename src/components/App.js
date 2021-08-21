@@ -34,6 +34,10 @@ function App() {
             { isLogged ? <Redirect to="/chats" /> : <Redirect to="/" /> }
             <Chats userLogged={userLogged} />
           </Route>
+
+          <Route path="*">
+              { isLogged ? <Redirect to="/chats" /> : <Redirect to="/" /> }
+          </Route>
         </Switch>
       </Router>
     </>

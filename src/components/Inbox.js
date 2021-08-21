@@ -2,7 +2,16 @@ const Inbox = ({ inboxes }) => {
 
     return (
         <div className="container-fluid">
-            <p className="fs-4">INBOX <i className="bi bi-inbox-fill"></i></p>
+            <p className="fs-4">
+                <span className="position-relative">
+                    INBOX <i className="bi bi-inbox-fill"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary fs-6">
+                        {inboxes === null ? 0 : inboxes.length}
+                        <span class="visually-hidden">New alerts</span>
+                    </span>
+                </span>
+            </p>
+
             <div className="inbox-container">
                 { inboxes === null && <p className="fst-italic">NO MESSAGES AVAILABLE, START MESSAGING NOW!</p> }
                 { 
