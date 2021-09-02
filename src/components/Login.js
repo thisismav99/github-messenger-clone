@@ -35,7 +35,7 @@ const Login = () => {
                         <div className="card-body">
                             <form onSubmit={handleSubmit((data, event) => login(data, event))}>
                                 <div className="text-center mb-3 fs-1">
-                                    <i class="bi bi-chat-dots"></i>
+                                    <i className="bi bi-chat-dots"></i>
                                 </div>
                                 <div className="form-floating">
                                     <input type="email" id="floatingEmail" className="form-control" placeholder="Email" 

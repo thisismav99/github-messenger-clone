@@ -1,13 +1,15 @@
-const Inbox = ({ inboxes }) => {
+import { Link } from "react-router-dom";
+
+const Inbox = ({ inboxes, users }) => {
 
     return (
         <div className="container-fluid">
             <p className="fs-4">
                 <span className="position-relative">
                     INBOX <i className="bi bi-inbox-fill"></i>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary fs-6">
+                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary fs-6">
                         {inboxes === null ? 0 : inboxes.length}
-                        <span class="visually-hidden">New alerts</span>
+                        <span className="visually-hidden">New alerts</span>
                     </span>
                 </span>
             </p>
@@ -24,12 +26,24 @@ const Inbox = ({ inboxes }) => {
                                 <div className="container">
                                     <div className="row">
                                         <div className="col-xl-6">
-                                            <button className="btn btn-light">
-                                                <i className="bi bi-eye-fill"></i>
-                                            </button>
-                                            <button className="btn btn-light ms-2">
-                                                <i className="bi bi-trash-fill"></i>
-                                            </button>
+                                            {
+                                                users.map((user) => (
+                                                    <div key={user.id}>
+                                                        {
+                                                            user.email === data.from &&
+                                                            <div>
+                                                                <Link className="btn btn-light" to={`/chat/${user.id}`}>
+                                                                    <i className="bi bi-eye-fill"></i>
+                                                                </Link>
+
+                                                                <Link className="btn btn-light ms-2" to={`/delete/${user.id}`}>
+                                                                    <i className="bi bi-trash-fill"></i>
+                                                                </Link>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                ))
+                                            }
                                         </div>
                                         <div className="col-xl-6">
                                             <p className="text-end fw-bold">{data.dateSend.toDate().toDateString()}</p>

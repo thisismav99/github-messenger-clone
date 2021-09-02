@@ -105,6 +105,42 @@ const useFetch = (collection, userLogged, to) => {
                 }
             });
         }
+        else if(collection === "delete"){
+            firebase.firestore().collection("users")
+            .onSnapshot((querySnapshot) => {
+                let email;
+                querySnapshot.forEach((doc) => {
+                    if(doc.id === to){
+                        email = doc.data().email;
+                    }
+                });
+
+                if(subscribe.current){
+                    setEmail(email);
+                }
+            }, (error) => {
+                console.log(error);
+            });
+
+            firebase.firestore().collection("inboxes")
+            .onSnapshot((querySnapshot) => {
+                let inboxes = [];
+
+                querySnapshot.forEach((doc) => {
+                    if(doc.data().from === userLogged && doc.data().to === email){
+                        inboxes.push({...doc.data(), id: doc.id});
+                    }
+                    
+                    if(doc.data().to === userLogged && doc.data().from === email){
+                        inboxes.push({...doc.data(), id: doc.id});
+                    }
+                });
+
+                if(subscribe.current){
+                    setInboxes(inboxes.length === 0 ? null : inboxes);
+                }
+            });
+        }
 
         return () => subscribe.current = false;
     }, [collection, userLogged, to, email]);

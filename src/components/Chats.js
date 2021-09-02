@@ -4,6 +4,7 @@ import useTitle from "../hooks/useTitle";
 import Inbox from "./Inbox";
 import Users from "./Users";
 import Chat from "./Chat";
+import Delete from "./Delete";
 
 const Chats = ({userLogged}) => {
     useTitle("MESSENGER CLONE - CHAT NOW!");
@@ -19,10 +20,13 @@ const Chats = ({userLogged}) => {
                     <div className="col-xl-10">
                         <Switch>
                             <Route exact path="/chats">
-                                <Inbox inboxes={inboxes} />
+                                <Inbox inboxes={inboxes} users={users} />
                             </Route>
                             <Route exact path="/chat/:id">
                                 <Chat userLogged={userLogged} />
+                            </Route>
+                            <Route exact path="/delete/:id">
+                                <Delete userLogged={userLogged} />
                             </Route>
                         </Switch>
                     </div>
